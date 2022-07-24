@@ -13,10 +13,24 @@ func printSomething(phrase string, wg *sync.WaitGroup) {
 func main() {
 	var waitgroup sync.WaitGroup
 
-	waitgroup.Add(1)
-	go printSomething("This is the first thing to be printed!", &waitgroup)
-	waitgroup.Wait()
+	words := []string{
+		"primeira palavra",
+		"secunda palavra",
+		"terceira palavra",
+		"quarta palavra",
+		"quinta palavra",
+		"sexta palavra",
+		"sétima palavra",
+		"oitava palavra",
+		"nona palavra",
+	}
 
+	waitgroup.Add(len(words))
+
+	for _, word := range words {
+		go printSomething(word, &waitgroup)
+	}
+	waitgroup.Wait()
 	waitgroup.Add(1)
 	printSomething("This is the second thing to be printed!", &waitgroup)
 }
